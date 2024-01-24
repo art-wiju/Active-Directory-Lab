@@ -1,27 +1,27 @@
-# Active-Directory-Lab
+# Active Directory Lab with Security Implementation.
 
-Securing your IT assets requires being proactive. I could continue securing the environment with the help of this Official Microsoft Guide https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-e--securing-enterprise-admins-groups-in-active-directory, but for the sake of demonstration I will finish here. 
-
-Description
+<h2>Description</h2>
 This project is a walkthrough of how I created an Active Directory home lab Environment using VMWare Virtualbox. I set up a Microsoft Server to run Active Directory on it. I then configure a Domain Controller that will allow me to run a domain. After that I executed a Powershell script to pull information from a list of names in a text note, create 1000 users in Active Directory and proceed to log into those newly created accounts on another client that uses the domain I set up to connect to the internet. This lab simulates a corporate environment. Lastly, I will configure a couple basic security measures such as password strenght and account lockout policies. In this lab I'll need a Microsoft Server 2019 ISO, A Windows 10 Enterprise ISO, VMWare and a Powershell script.
 
-Languages and Utilities Used
+<h2>Languages and Utilities Used </h2>
 Active Directory
 PowerShell
 CMD
 
-Environments Used
+<h2>Environments Used</h2>
 VMWare VirtualBox
 Microsoft Server 2019
 Windows 10
 
-Links
-VMWare: https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html
+<h2>Links</h2>
+<p>VMWare: https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html
 Microsoft Server 2019: https://www.microsoft.com/en-us/evalcenter/download-windows-server-2019
-Windows 10 ISO: https://www.microsoft.com/en-us/software-download/windows10
+Windows 10 ISO: https://www.microsoft.com/en-us/software-download/windows10</p>
 
-Program walk-through
+<h2>Program walk-through</h2>
+
 The network diagram I'll be using for this project
+
 ![1](https://github.com/art-wiju/Active-Directory-Lab/assets/132944565/8fbd7515-b65f-49b9-a955-8e77eb7e2fe1)
 
 
@@ -79,43 +79,35 @@ It is now time to create a new Virtual Machine that will act as a user in the do
 ![12](https://github.com/art-wiju/Active-Directory-Lab/assets/132944565/d9412578-7f25-41bb-a2f7-8dd25dd061ee)
 
 
+After configuring a separate virtual machine that will simulate an employee logging into the domain. I will also be renaming the computer CLIENT1 and clicking the box to become a member of the mydomain.com domain. I am prompted to give my log in credential and I chose to use the Administrator account I set up earlier.
 
-After configuring a separate virtual machine that will simulate an employee logging into the domain. Lets kill two birds with one stone by renaming the computer CLIENT1 and clicking the box to become a member of the mydomain.com domain. I am prompted to give my log in credential and I chose to use the Administrator account I set up earlier
-Configuring the Client VM
+![13](https://github.com/art-wiju/Active-Directory-Lab/assets/132944565/276d2ce6-898b-4278-937d-a20fe756b02c)
 
+I go back into my server VM and check the DCHP to see how many addresses has been leased. We can see here that my CLIENT1 Virtual Machine has been leased an address. If this was a real company environment there would be hundreds, if not thousands of leased addresses in this folder depending on what the lease duration is of course! I set mine to 8 days in this environment.
 
+![14](https://github.com/art-wiju/Active-Directory-Lab/assets/132944565/07707c5a-1da3-4fd9-8c41-d645b722e39d)
 
-I Successfully join the domain as a member!
-Configuring the Client VM
+I access the internet from CLIENT1 to make sure that we indeed have access to internet that goes through our DC. Look at that beautiful github page. 
 
+![15](https://github.com/art-wiju/Active-Directory-Lab/assets/132944565/90222b31-72d2-4597-9738-1653f7330aec)
 
+After testing internet connectivity, I go back to my DC and open Group Policy Management. This is where I want to set up security policies that will protect the organization against some of the most common security issues, such as brute force attacks in weak, simple passwords. 
 
-I log into a user account I created from the Powershell script to test if everything is configured correctly. Instead of logging into the user account created when I made the virtual machine, I try to log into a user created account in MYDOMAIN
-Testing The Environment
+![16](https://github.com/art-wiju/Active-Directory-Lab/assets/132944565/a4d9eeff-27bd-4eff-90af-182e8f90fc56)
 
+I set up a Maximum password age of 31 days (1 month), which means users have to get a new password every month, and they can't reuse any of the 24 last passwords. They also can't change passwords more than once a day, and are enforced to use a minimum lenght of 12 characters, which will also have a complexity requirement. I would also create an user awareness campaign with this to teach users best practices when creating passwords, such as not using anything that identifies them, such as name or employee ID, but this is a topic for another lab. 
 
+![17](https://github.com/art-wiju/Active-Directory-Lab/assets/132944565/4fad5246-ef76-4656-a941-bc84f4b89b1e)
 
-Running command promt to see if the client VM is getting the IP address properly assigned by the DC. We can see that I was properly leased an IP address by the domain controller (circled red) and when I ping the domain, it works (circled yellow)
-Testing The Environment
+I also set up an account lockout policy to protect against brute force attacks. At this point, a password that is 12 characters in lenght with complexity requirements and only 5 attempts per lockout will leave little to no options to intruders to brute force this system. It would be take at least a couple centuries to crack the password. 
 
+![18](https://github.com/art-wiju/Active-Directory-Lab/assets/132944565/bb2049f9-4db0-4fc3-ba94-5ecc147fa9e2)
 
+Lastly, I proceed to push the update to Group Policy to all the computers in the domain, which in this case is just our CLIENT1 computer.
 
-A final test to see that the work environment and bulk users I created is working
-Testing The Environment
-
-
-
-I head back into my server VM and check the DCHP to see how many addresses has been leased. We can see here circled in red that my CLIENT1 Virtual Machine has been leased an address. If this was a real company environment there would be hundreds, if not thousands of leased addresses in this folder depending on what the lease duration is of course! I set mine to 20 days in this environment
-Checking leased addresses
-
-
-
-Here is another way to check how many computers or devices are currently connected to the domain. We can see that my CLIENT1 computer is being properly recognized in Active Directory. Again, if this was a real environment there would probably be thousands of devices in this folder
-Checking the computers in Active Dirctory
+Securing your IT assets requires being proactive. I could continue securing the environment with the help of this Official Microsoft Guide https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-e--securing-enterprise-admins-groups-in-active-directory, but for the sake of demonstration I will finish here. 
 
 
 
-Here I am scrolling through all the User accounts I created with Powershell. Over 1000 has been created!
-Checking the Users created by Powershell
 
 
