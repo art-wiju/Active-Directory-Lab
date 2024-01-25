@@ -1,26 +1,26 @@
 # Active Directory Lab with Security Implementation.
 
-<h2>Description</h2>
-This project is a walkthrough of how I created an Active Directory home lab Environment using VMWare Virtualbox. I set up a Microsoft Server to run Active Directory on it. I then configure a Domain Controller that will allow me to run a domain. After that I executed a Powershell script to pull information from a list of names in a text note, create 1000 users in Active Directory and proceed to log into those newly created accounts on another client that uses the domain I set up to connect to the internet. This lab simulates a corporate environment. Lastly, I will configure a couple basic security measures such as password strenght and account lockout policies. In this lab I'll need a Microsoft Server 2019 ISO, A Windows 10 Enterprise ISO, VMWare and a Powershell script.
+## Description
+This project is a walkthrough of how I created an Active Directory home lab Environment using VMWare Virtualbox. I set up a Microsoft Server to run Active Directory on it. I then configure a Domain Controller that will allow me to run a domain. After that I executed a Powershell script to pull information from a list of names in a text note, create 1000 users in Active Directory and proceed to log into those newly created accounts on another client that uses the domain I set up to connect to the internet. This lab simulates a corporate environment. Lastly, I will configure a couple basic security measures such as password strenght and account lockout policies.
 
-<h2>Languages and Utilities Used </h2>
-Active Directory
-PowerShell
-CMD
+## Languages and Utilities Used 
+* Active Directory
+* PowerShell
+* CMD</p>
 
-<h2>Environments Used</h2>
-VMWare VirtualBox
-Microsoft Server 2019
-Windows 10
+## Environments Used
+- VMWare VirtualBox
+- Microsoft Server 2019
+- Windows 10
 
-<h2>Links</h2>
-<p>VMWare: https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html
-Microsoft Server 2019: https://www.microsoft.com/en-us/evalcenter/download-windows-server-2019
-Windows 10 ISO: https://www.microsoft.com/en-us/software-download/windows10</p>
+## Links
+- VMWare: https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html
+- Microsoft Server 2019: https://www.microsoft.com/en-us/evalcenter/download-windows-server-2019
+- Windows 10 ISO: https://www.microsoft.com/en-us/software-download/windows10
 
-<h2>Program walk-through</h2>
+## Program walk-through
 
-The network diagram I'll be using for this project
+The network diagram I'll be using for this project:
 
 ![1](https://github.com/art-wiju/Active-Directory-Lab/assets/132944565/8fbd7515-b65f-49b9-a955-8e77eb7e2fe1)
 
